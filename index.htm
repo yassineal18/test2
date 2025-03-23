@@ -46,15 +46,6 @@
         .btn:hover {
             background: #ffaa00;
         }
-        .social-links {
-            margin-top: 20px;
-        }
-        .social-links a {
-            color: #ffcc00;
-            margin: 0 10px;
-            text-decoration: none;
-            font-size: 18px;
-        }
     </style>
 </head>
 <body>
@@ -62,13 +53,36 @@
         <img src="https://staticg.sportskeeda.com/editor/2025/03/c9904-17426650567746-1920.jpg" alt="Solo Leveling">
         <h1>Solo Leveling - الحلقة الجديدة متاحة الآن!</h1>
         <p>شاهد الحلقة الجديدة من الأنمي المذهل Solo Leveling واستمتع بمغامرات Sung Jinwoo!</p>
-        <a href="https://optidownloader.com/1794238" class="btn">🔴 شاهد الآن</a>
-        <div class="social-links">
-            <p>تابعنا على:</p>
-            <a href="#">📸 إنستغرام</a>
-            <a href="#">🎥 تيك توك</a>
-            <a href="#">📌 تويتر</a>
-        </div>
+        <a id="watch-button" href="#" class="btn">🔴 شاهد الآن</a>
     </div>
+
+    <script>
+        async function getCountry() {
+            try {
+                let response = await fetch("https://ipapi.co/json/");
+                let data = await response.json();
+                let country = data.country_code;
+                
+                // تحديد الرابط حسب الدولة
+                let links = {
+                    "US": "https://www.youtube.com/watch?v=RpzZ9VY7f5k",
+                    "PO": "https://optidownloader.com/1794238",
+                    "MA": "https://optidownloader.com/1794764",
+                    "EG": "https://www.youtube.com/watch?v=RpzZ9VY7f5k"
+                };
+
+                // تعيين الرابط المناسب
+                let defaultLink = "https://www.youtube.com/watch?v=RpzZ9VY7f5k";
+                let targetLink = links[country] || defaultLink;
+
+                // تحديث الرابط في الزر
+                document.getElementById("watch-button").href = targetLink;
+            } catch (error) {
+                console.error("Error fetching location:", error);
+            }
+        }
+
+        getCountry();
+    </script>
 </body>
 </html>
